@@ -8,7 +8,7 @@ export async function findAll(limit: number, skip: number) {
 }
 
 // read by id
-export async function findOne(id: number) {
+export async function findOne(id: string) {
   return db.select().from(usersTable).where(eq(usersTable.id, id));
 }
 
@@ -18,11 +18,11 @@ export async function create(body: any) {
 }
 
 // update
-export async function update(id: number, body: any) {
+export async function update(id: string, body: any) {
   return db.update(usersTable).set(body).where(eq(usersTable.id, id)).returning();
 }
 
 // delete
-export async function remove(id: number) {
+export async function remove(id: string) {
   return db.delete(usersTable).where(eq(usersTable.id, id)).returning();
 }

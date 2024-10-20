@@ -1,17 +1,15 @@
-import * as usersrepository from "./users/repository";
-import * as postsrepository from "./posts/repository";
+import * as users_services from "./users/services";
+import * as posts_services from "./posts/services";
 
 const one = async () => {
-  const bodyy = { name: "name-9999999" };
-  const user = await usersrepository.create(bodyy);
-  for (let i = 0; i < 5; i++) {
+  const bodyy = { name: "name9999999" };
+  const user = await users_services.create(bodyy);
+  for (let i = 0; i < 2; i++) {
     const bodyy = {
-      title: `ttttt-${i}`,
-      users_id: user[0].id,
+      title: `title-test-${i}`,
+      users_id: user.id,
     };
-    await postsrepository.create(bodyy);
-    // sleep for 1 second
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    await posts_services.create(bodyy);
   }
 };
 

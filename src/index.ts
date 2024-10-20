@@ -1,15 +1,15 @@
 import { Elysia, t } from "elysia";
 import { swagger } from "@elysiajs/swagger";
 import * as users_services from "./users/services";
+import * as posts_services from "./posts/services";
 
 const app = new Elysia()
   .use(swagger())
-  .get("/users", ({ query }) => {
-    return users_services.findAll(Number(query.page));
+  .get("/users", (query: { page: number }) => {
+    const page = query.page;
+    return users_services.findAll(page);
   })
-  .get("/users/:id", ({ params: { id } }) => users_services.findOne(id), {
-    params: t.Object({ id: t.String() }),
-  })
+  .get("/users/:id", ({ params: { id } }) => users_services.findOne(id))
   .post("/users", ({ body }) => users_services.create(body), {
     body: t.Object({
       name: t.String(),
@@ -22,6 +22,29 @@ const app = new Elysia()
     }),
   })
   .delete("/users/:id", ({ params: { id } }) => users_services.remove(id), {
+    params: t.Object({ id: t.String() }),
+  })
+
+  .get("/posts", (query: { page: number }) => {
+    const page = query.page;
+    return posts_services.findAll(page);
+  })
+  .get("/posts/:id", ({ params: { id } }) => posts_services.findOne(id), {
+    params: t.Object({ id: t.String() }),
+  })
+  .post("/posts", ({ body }) => posts_services.create(body), {
+    body: t.Object({
+      title: t.String(),
+      users_id: t.String(),
+    }),
+  })
+  .put("/posts/:id", ({ params: { id }, body }) => posts_services.update(id, body), {
+    params: t.Object({ id: t.String() }),
+    body: t.Object({
+      name: t.String(),
+    }),
+  })
+  .delete("/posts/:id", ({ params: { id } }) => posts_services.remove(id), {
     params: t.Object({ id: t.String() }),
   })
   .listen(3000);
