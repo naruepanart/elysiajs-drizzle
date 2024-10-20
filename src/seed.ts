@@ -1,16 +1,18 @@
-import { db } from "./db";
-import { postsTable, usersTable } from "./db/schema";
 import * as usersrepository from "./users/repository";
+import * as postsrepository from "./posts/repository";
 
-const two = async () => {
-  await db.delete(usersTable);
-  await db.delete(postsTable);
-  /* for (let i = 0; i < 50; i++) {
-    const name = `name-${i}`;
-    await usersrepository.create(name);
+const one = async () => {
+  const bodyy = { name: "name-9999999" };
+  const user = await usersrepository.create(bodyy);
+  for (let i = 0; i < 5; i++) {
+    const bodyy = {
+      title: `ttttt-${i}`,
+      users_id: user[0].id,
+    };
+    await postsrepository.create(bodyy);
     // sleep for 1 second
     await new Promise((resolve) => setTimeout(resolve, 1000));
-  } */
+  }
 };
 
-two();
+one();
