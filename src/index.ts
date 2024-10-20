@@ -1,33 +1,29 @@
- import { Elysia } from "elysia";
+import { Elysia, t } from "elysia";
 import { swagger } from "@elysiajs/swagger";
-import * as usersservices from "./users/services";
+import * as users_services from "./users/services";
 
 const app = new Elysia()
   .use(swagger())
-  .get("/", async ({ query }: any) => {
-    const { page } = query;
-    const users = await usersservices.findAll(page);
-    return users
+  .get("/users", ({ query }) => {
+    return users_services.findAll(Number(query.page));
   })
-  .get("/id/:id", async ({ params: { id } }) => {
-    const user = await usersservices.findOne(id);
-    return user[0]
+  .get("/users/:id", ({ params: { id } }) => users_services.findOne(id), {
+    params: t.Object({ id: t.String() }),
   })
-  .post("/", async ({ body }: any) => {
-    const { name } = body;
-    const newUser = await usersservices.create(name);
-    return { newUser };
+  .post("/users", ({ body }) => users_services.create(body), {
+    body: t.Object({
+      name: t.String(),
+    }),
   })
-  .put("/id/:id", async({ params: { id }, body }: any) => {
-    const { name } = body;
-    const updatedUser =  await usersservices.update(id, name);
-    return { updatedUser };
+  .put("/users/:id", ({ params: { id }, body }) => users_services.update(id, body), {
+    params: t.Object({ id: t.String() }),
+    body: t.Object({
+      name: t.String(),
+    }),
   })
-  .delete("/id/:id", async ({ params: { id } }) => {
-    const deletedUser = await usersservices.remove(id);
-    return { deletedUser };
+  .delete("/users/:id", ({ params: { id } }) => users_services.remove(id), {
+    params: t.Object({ id: t.String() }),
   })
-
   .listen(3000);
 
 console.log(`🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`);

@@ -1,4 +1,4 @@
-import { integer, pgTable, PgTimestampStringBuilder, timestamp, uuid, varchar } from "drizzle-orm/pg-core";
+import { integer, pgTable, varchar } from "drizzle-orm/pg-core";
 import { ObjectId } from "bson";
 
 export const usersTable = pgTable("users", {
