@@ -1,4 +1,5 @@
 import * as posts_repository from "./repository";
+import * as users_repository from "../users/repository";
 
 // read
 export const findAll = (page: number) => {
@@ -16,7 +17,13 @@ export const findOne = async (id: string) => {
 
 // create
 export const create = async (req: any) => {
-  const body = { title: req.title, users_id: req.users_id };
+  const users_id = req.users_id;
+  const users_exists = await users_repository.findOne(users_id);
+  if (!users_exists[0]) {
+    return { message: `User with id ${users_id} does not exist` };
+  }
+
+  const body = { title: req.title, users_id };
   const posts = await posts_repository.create(body);
   return posts[0];
 };
