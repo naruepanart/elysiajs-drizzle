@@ -1,6 +1,8 @@
 import Keyv from "keyv";
 import KeyvSqlite from "@keyv/sqlite";
 
-const keyvStore = new KeyvSqlite("./kvcache/db101.sqlite");
+const kvStore = new KeyvSqlite("./kvcache/db101.sqlite");
 
-export { keyvStore };
+const kvPosts = new Keyv({ store: kvStore, namespace: "posts" });
+
+export { kvPosts };
