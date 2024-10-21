@@ -5,7 +5,7 @@ import * as posts_services from "./posts/services";
 
 const app = new Elysia()
   .use(swagger())
-  .get("/users", ({ query: { page } }) => users_services.findAll(page), {
+  .get("/users", ({ query: { page } }) => users_services.findAll(+page), {
     query: t.Object({
       page: t.String(),
     }),
@@ -29,7 +29,7 @@ const app = new Elysia()
   .delete("/users/:id", ({ params: { id } }) => users_services.remove(id), {
     params: t.Object({ id: t.String() }),
   })
-  .get("/posts", ({ query: { page } }) => posts_services.findAll(page), {
+  .get("/posts", ({ query: { page } }) => posts_services.findAll(+page), {
     query: t.Object({
       page: t.String(),
     }),
