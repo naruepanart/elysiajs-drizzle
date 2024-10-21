@@ -19,7 +19,7 @@ export async function findAll(limit: number, skip: number) {
 }
 
 // read by id
-export async function findOne(id: string) {
+export async function findOne(id: number) {
   return db.select().from(postsTable).where(eq(postsTable.id, id));
 }
 
@@ -29,11 +29,11 @@ export async function create(body: any) {
 }
 
 // update
-export async function update(id: string, body: any) {
+export async function update(id: number, body: any) {
   return db.update(postsTable).set(body).where(eq(postsTable.id, id)).returning();
 }
 
 // delete
-export async function remove(id: string) {
+export async function remove(id: number) {
   return db.delete(postsTable).where(eq(postsTable.id, id)).returning();
 }

@@ -4,13 +4,13 @@ import * as users_repository from "../users/repository";
 // read
 export const findAll = (page: number) => {
   const limit = 2;
-  const skip = (+page - 1) * limit;
+  const skip = (page - 1) * limit;
   const posts = posts_repository.findAll(limit, skip);
   return posts;
 };
 
 // read by id
-export const findOne = async (id: string) => {
+export const findOne = async (id: number) => {
   const posts = await posts_repository.findOne(id);
   return posts[0];
 };
@@ -29,14 +29,14 @@ export const create = async (req: any) => {
 };
 
 // update
-export const update = async (id: string, req: any) => {
+export const update = async (id: number, req: any) => {
   const body = { name: req.name };
   const posts = await posts_repository.update(id, body);
   return posts[0];
 };
 
 // delete
-export const remove = async (id: string) => {
+export const remove = async (id: number) => {
   const posts = await posts_repository.remove(id);
   return posts[0];
 };
