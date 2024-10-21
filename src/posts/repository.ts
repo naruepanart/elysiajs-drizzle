@@ -1,5 +1,5 @@
 import { desc, eq } from "drizzle-orm";
-import { db } from "../db";
+import { db } from "../db/postgres";
 import { postsTable, usersTable } from "../db/schema/schema";
 
 // read

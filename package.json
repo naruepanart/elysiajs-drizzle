@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@elysiajs/swagger": "^1.1.5",
+    "@keyv/sqlite": "^4.0.1",
     "@types/pg": "^8.11.10",
     "bson": "^6.8.0",
     "dotenv": "^16.4.5",

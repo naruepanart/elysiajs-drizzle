@@ -1,11 +1,29 @@
 import * as posts_repository from "./repository";
 import * as users_repository from "../users/repository";
 
+// keyv store
+import Keyv from "keyv";
+import { keyvStore } from "../db/sqlite";
+const keyv = new Keyv({ store: keyvStore, namespace: "posts" });
+
 // read
-export const findAll = (page: number) => {
-  const limit = 2;
+export const findAll = async (page: number) => {
+  const limit = 3;
   const skip = (page - 1) * limit;
-  const posts = posts_repository.findAll(limit, skip);
+
+  // get from cache
+  const get_posts = await keyv.get(`${page}`);
+  if (get_posts) {
+    return get_posts;
+  }
+
+  // get from db
+  const posts = await posts_repository.findAll(limit, skip);
+  if (posts.length > 0) {
+    // 12 hours
+    await keyv.set(`${page}`, posts, 1000 * 60 * 60 * 12);
+    return posts;
+  }
   return posts;
 };
 

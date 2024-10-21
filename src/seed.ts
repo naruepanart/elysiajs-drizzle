@@ -1,6 +1,6 @@
 import * as users_services from "./users/services";
 import * as posts_services from "./posts/services";
-import { db } from "./db";
+import { db } from "./db/postgres";
 import { postsTable, usersTable } from "./db/schema/schema";
 
 const one = async () => {
