@@ -2,10 +2,11 @@
   "name": "@bun-examples/elysia",
   "version": "1.0.50",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "bun run --watch src/index.ts",
-    "start": "bun run src/index.ts",
-    "seed": "bun run src/seed.ts",
+    "dev": "bun --watch src/index.ts",
+    "build": "bun build src/index.ts --target bun --outdir ./dist",
+    "start": "NODE_ENV=production bun dist/index.js",
+    "test": "bun test",
+    "seed": "bun src/seed.ts",
     "mi": "bun drizzle-kit push"
   },
   "dependencies": {
@@ -21,8 +22,5 @@
     "bun-types": "latest",
     "drizzle-kit": "^0.26.2"
   },
-  "module": "src/index.js",
-  "bun-create": {
-    "start": "bun run src/index.ts"
-  }
+  "module": "src/index.js"
 }

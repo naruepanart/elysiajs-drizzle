@@ -5,11 +5,16 @@ import * as posts_services from "./posts/services";
 
 const app = new Elysia()
   .use(swagger())
-  .get("/users", (query: { page: number }) => {
-    const page = query.page;
-    return users_services.findAll(page);
+  .get("/users", ({ query: { page } }) => users_services.findAll(page), {
+    query: t.Object({
+      page: t.String(),
+    }),
   })
-  .get("/users/:id", ({ params: { id } }) => users_services.findOne(id))
+  .get("/users/:id", ({ params: { id } }) => users_services.findOne(id), {
+    params: t.Object({
+      id: t.String(),
+    }),
+  })
   .post("/users", ({ body }) => users_services.create(body), {
     body: t.Object({
       name: t.String(),
@@ -24,10 +29,10 @@ const app = new Elysia()
   .delete("/users/:id", ({ params: { id } }) => users_services.remove(id), {
     params: t.Object({ id: t.String() }),
   })
-
-  .get("/posts", (query: { page: number }) => {
-    const page = query.page;
-    return posts_services.findAll(page);
+  .get("/posts", ({ query: { page } }) => posts_services.findAll(page), {
+    query: t.Object({
+      page: t.String(),
+    }),
   })
   .get("/posts/:id", ({ params: { id } }) => posts_services.findOne(id), {
     params: t.Object({ id: t.String() }),

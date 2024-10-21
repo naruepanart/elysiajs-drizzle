@@ -1,9 +1,10 @@
 import * as users_repository from "./repository";
 
 // read
-export const findAll = (page: number) => {
-  const limit = 5;
-  const skip = (page - 1) * limit;
+export const findAll = (page: string) => {
+  console.log("page",page)
+  const limit = 2;
+  const skip = (+page - 1) * limit;
   const user = users_repository.findAll(limit, skip);
   return user;
 };

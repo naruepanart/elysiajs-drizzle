@@ -2,9 +2,9 @@ import * as posts_repository from "./repository";
 import * as users_repository from "../users/repository";
 
 // read
-export const findAll = (page: number) => {
-  const limit = 5;
-  const skip = (page - 1) * limit;
+export const findAll = (page: string) => {
+  const limit = 2;
+  const skip = (+page - 1) * limit;
   const posts = posts_repository.findAll(limit, skip);
   return posts;
 };
