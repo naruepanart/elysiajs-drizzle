@@ -1,11 +1,11 @@
-import * as users_services from "./users/services";
-import * as posts_services from "./posts/services";
+import * as usersServices from "./users/services";
+import * as postsServices from "./posts/services";
 import { db } from "./db/postgres";
 import { postsTable, usersTable } from "./db/schema/schema";
 
 const one = async () => {
   // const bodyy = { name: "name1" };
-  // const user = await users_services.create(bodyy);
+  // const user = await usersServices.create(bodyy);
 
   // await db.delete(postsTable);
   // await db.delete(usersTable);
@@ -16,18 +16,18 @@ const one = async () => {
     const bodyy = {
       name: `name-test-${i}`,
     };
-    user = await users_services.create(bodyy);
+    user = await usersServices.create(bodyy);
   } */
 
   const bodyy = { name: "name11111" };
-  const user = await users_services.create(bodyy);
+  const user = await usersServices.create(bodyy);
   console.log(user);
   for (let i = 0; i < 10; i++) {
     const bodyy = {
       title: `title-test-${i}`,
       users_id: user.id,
     };
-    await posts_services.create(bodyy);
+    await postsServices.create(bodyy);
   }
 };
 
