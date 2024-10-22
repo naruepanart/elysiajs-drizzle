@@ -40,4 +40,5 @@ yarn-error.log*
 **/*.log
 package-lock.json
 **/*.bun
-kvcache/db101.sqlite
+/kvLevelDB
+/kvSqlite

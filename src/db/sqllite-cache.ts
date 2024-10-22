@@ -1,13 +1,13 @@
 import { kvPosts } from "./sqlite";
 
-export const getCache = (key: string) => {
+export const getCacheSqlite = (key: string) => {
   return kvPosts.get(key);
 };
 
-export const setCache = (key: string, value: unknown) => {
+export const setCacheSqlite = (key: string, value: unknown) => {
   return kvPosts.set(key, value);
 };
 
-export const setCacheWithTTL = (key: string, value: unknown, ttlSeconds: number) => {
+export const setCacheSqliteWithTTL = (key: string, value: unknown, ttlSeconds: number) => {
   return kvPosts.set(key, value, ttlSeconds * 1000);
 };

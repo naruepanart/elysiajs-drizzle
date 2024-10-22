@@ -19,10 +19,9 @@ const one = async () => {
     user = await usersServices.create(bodyy);
   } */
 
-  const bodyy = { name: "name11111" };
+  const bodyy = { name: "name-test" };
   const user = await usersServices.create(bodyy);
-  console.log(user);
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i <= 100; i++) {
     const bodyy = {
       title: `title-test-${i}`,
       users_id: user.id,

@@ -1,22 +1,25 @@
 import * as postsRepository from "./repository";
 import * as usersRepository from "../users/repository";
-import { getCache, setCacheWithTTL } from "../db/sqllite-cache";
+import { getCacheSqlite, setCacheSqlite } from "../db/sqllite-cache";
+import { getCacheLevelDB, setCacheLevelDB } from "../db/leveldb-cache";
 
 // read
 export const findAll = async (page: number) => {
-  const limit = 3;
+  const limit = 100;
   const skip = (page - 1) * limit;
 
   // Attempt to get from cache
-  const cachedPosts = await getCache(`${page}`);
+  const cachedPosts = await getCacheLevelDB(`${page}`);
   if (cachedPosts) return cachedPosts;
 
   // Get from db
   const posts = await postsRepository.findAll(limit, skip);
-  if (!posts || posts.length === 0) return { message: "Posts not found" };
+  if (!posts.length) {
+    return { message: "No posts found" };
+  }
 
   // Set cache
-  await setCacheWithTTL(`${page}`, posts, 60 * 5);
+  await setCacheLevelDB(`${page}`, posts);
   return posts;
 };
 
