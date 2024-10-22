@@ -5,11 +5,11 @@ import { getCacheLevelDB, setCacheLevelDB } from "../db/leveldb-cache";
 
 // read
 export const findAll = async (page: number) => {
-  const limit = 100;
+  const limit = 5;
   const skip = (page - 1) * limit;
 
   // Attempt to get from cache
-  const cachedPosts = await getCacheLevelDB(`${page}`);
+  const cachedPosts = await getCacheLevelDB(`${page}-${limit}-${skip}`);
   if (cachedPosts) return cachedPosts;
 
   // Get from db
@@ -19,7 +19,7 @@ export const findAll = async (page: number) => {
   }
 
   // Set cache
-  await setCacheLevelDB(`${page}`, posts);
+  await setCacheLevelDB(`${page}-${limit}-${skip}`, posts);
   return posts;
 };
 
