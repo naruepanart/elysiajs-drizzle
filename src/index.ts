@@ -10,7 +10,7 @@ const app = new Elysia()
       page: t.String(),
     }),
   })
-  .get("/users/:id", ({ params: { id } }) => users_services.findOne(id), {
+  .get("/users/:id", ({ params: { id } }) => users_services.findOne(+id), {
     params: t.Object({
       id: t.String(),
     }),
@@ -20,13 +20,13 @@ const app = new Elysia()
       name: t.String(),
     }),
   })
-  .put("/users/:id", ({ params: { id }, body }) => users_services.update(id, body), {
+  .put("/users/:id", ({ params: { id }, body }) => users_services.update(+id, body), {
     params: t.Object({ id: t.String() }),
     body: t.Object({
       name: t.String(),
     }),
   })
-  .delete("/users/:id", ({ params: { id } }) => users_services.remove(id), {
+  .delete("/users/:id", ({ params: { id } }) => users_services.remove(+id), {
     params: t.Object({ id: t.String() }),
   })
   .get("/posts", ({ query: { page } }) => posts_services.findAll(+page), {
@@ -34,7 +34,7 @@ const app = new Elysia()
       page: t.String(),
     }),
   })
-  .get("/posts/:id", ({ params: { id } }) => posts_services.findOne(id), {
+  .get("/posts/:id", ({ params: { id } }) => posts_services.findOne(+id), {
     params: t.Object({ id: t.String() }),
   })
   .post("/posts", ({ body }) => posts_services.create(body), {
@@ -43,13 +43,13 @@ const app = new Elysia()
       users_id: t.String(),
     }),
   })
-  .put("/posts/:id", ({ params: { id }, body }) => posts_services.update(id, body), {
+  .put("/posts/:id", ({ params: { id }, body }) => posts_services.update(+id, body), {
     params: t.Object({ id: t.String() }),
     body: t.Object({
       name: t.String(),
     }),
   })
-  .delete("/posts/:id", ({ params: { id } }) => posts_services.remove(id), {
+  .delete("/posts/:id", ({ params: { id } }) => posts_services.remove(+id), {
     params: t.Object({ id: t.String() }),
   })
   .listen(3000);
