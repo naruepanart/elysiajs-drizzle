@@ -2,6 +2,7 @@ import * as postsRepository from "./repository";
 import * as usersRepository from "../users/repository";
 import { getCacheSqlite, setCacheSqlite } from "../db/sqllite-cache";
 import { getCacheLevelDB, setCacheLevelDB } from "../db/leveldb-cache";
+import { getCacheLMDB, setCacheLMDB } from "../db/lmdb-cahce";
 
 // read
 export const findAll = async (page: number) => {
@@ -9,7 +10,7 @@ export const findAll = async (page: number) => {
   const skip = (page - 1) * limit;
 
   // Attempt to get from cache
-  const cachedPosts = await getCacheLevelDB(`${page}-${limit}-${skip}`);
+  const cachedPosts = await getCacheLMDB(`${page}-${limit}-${skip}`);
   if (cachedPosts) return cachedPosts;
 
   // Get from db
@@ -19,7 +20,7 @@ export const findAll = async (page: number) => {
   }
 
   // Set cache
-  await setCacheLevelDB(`${page}-${limit}-${skip}`, posts);
+  await setCacheLMDB(`${page}-${limit}-${skip}`, posts);
   return posts;
 };
 
