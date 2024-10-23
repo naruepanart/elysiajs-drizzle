@@ -6,10 +6,6 @@ export const setCacheLMDB = async (key: string, value: any) => {
 };
 
 export const getCacheLMDB = async (key: string) => {
-  try {
-    const value = await kvLMDB.get(key);
-    return value;
-  } catch (err) {
-    return null;
-  }
+  const value = await kvLMDB.get(key);
+  return value;
 };
