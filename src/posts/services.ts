@@ -9,19 +9,19 @@ export const findAll = async (page: number) => {
   const limit = 5;
   const skip = (page - 1) * limit;
 
-  // Attempt to get from cache
+  // Get from cache
   const cachedPosts = await getCacheLMDB(`${page}-${limit}-${skip}`);
-  if (cachedPosts) return cachedPosts;
-
-  // Get from db
-  const posts = await postsRepository.findAll(limit, skip);
-  if (!posts.length) {
-    return { message: "No posts found" };
+  if (!cachedPosts) {
+    // Read from db
+    const posts = await postsRepository.findAll(limit, skip);
+    if (!posts.length) {
+      return { message: "No posts found" };
+    }
+    // Set cache
+    await setCacheLMDB(`${page}-${limit}-${skip}`, posts);
+    return posts;
   }
-
-  // Set cache
-  await setCacheLMDB(`${page}-${limit}-${skip}`, posts);
-  return posts;
+  return cachedPosts;
 };
 
 // read by id
